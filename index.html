@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOU Invoice Creator</title>
+    <link href="style.css" rel="stylesheet"></link>
+</head>
+<body>
+    <main>
+       <section>
+           <nav class="toolbar">
+               <img src="images/logo.svg" class="logo">
+               <a title="User" class="user-wrap">
+                   <img src="images/user icon.svg" id="user-icon">
+                   <div>
+                    <h3 id="user-name">Spencer Dye</h3>
+                    <p id="small-email-txt">sdye9699@gmail.com</p>
+                   </div>
+                   <img src="images/expand details arrow.svg" class="details-arrow">
+                </a>
+               <div class="links-wrap">
+                   <div>
+                        <a title="Dashboard" class="link-block">
+                            <img src="images/dashboard icon.svg" class="link-icon">
+                            <h4>Dashboard</h4>
+                        </a>    
+                        <a href="index.html" title="Invoices" class="link-block">
+                                <img src="images/invoice icon.svg" class="link-icon">
+                                <h4>Invoices</h4>
+                        </a>
+                        <a title="Contracts" class="link-block">
+                                <img src="images/contract icon.svg" class="link-icon">
+                                <h4>Contracts</h4>
+                        </a>
+                        <a title="Statistics" class="link-block">
+                                <img src="images/stats icon.svg" class="link-icon">
+                                <h4>Statistics</h4>
+                        </a>
+                    </div>
+                    <div>
+                        <a title="Settings" class="link-block-btm">
+                            <img src="images/cog icon.svg" class="link-icon">
+                            <h4>Settings</h4>
+                        </a>
+                        <a title="Sign Out" class="link-block-btm">
+                            <img src="images/exit icon.svg" class="link-icon">
+                            <h4>Sign Out</h4>
+                        </a>
+                    </div>
+               </div>
+            </nav>
+            <!--End of navbar-->
+            <div class="work-area-wrap">
+                <div class="invoice-area">
+                    <h2><span id="greeting"></span> <span class="prpl-txt">Spencer</span>.<br>Let's create some invoices.</h2>
+                    <form class="invoice-input-wrap" name="info">
+                            <input id="invoice-title" type="text" placeholder="Invoice title" class="invoice-input" maxlength="48">
+                            <input id="invoice-recipient-name" type="text" placeholder="Recipient name" class="invoice-input" maxlength="48">
+                            <input id="invoice-recipient-email" type="email" placeholder="Recipient email" class="invoice-input" maxlength="48">
+                            <input id="invoice-due-date" type="date" placeholder="Due date" class="invoice-input" title="Choose Date">
+                    </form>
+                    <div class="invoice-btm-area">
+                        <div class="invoice-item-wrap" id="invoice-item-wrap">
+                            <p>Add an item below.</p>
+                            <!-- <div class="invoice-item">
+                                <div class="invoice-item-left-side">
+                                    <img src="images/delete-icon.svg" class="delete-icon" onclick="deleteItem()">
+                                    <p class="invoice-item-no">Item 1</p>
+                                    <p class="invoice-item-name" contenteditable="true">Lawn Cutting</p>
+                                </div>
+                                <p class="invoice-item-amount" contenteditable="true">$75.00</p>
+                            </div> -->
+                            <!-- <div class="invoice-item">
+                                <div class="invoice-item-left-side">
+                                    <p class="invoice-item-no">Item 1</p>
+                                    <input class="invoice-item-name" value="Placeholder">
+                                </div>
+                                <input class="invoice-item-amount" value="$100.00">
+                            </div> -->
+                        </div>
+                        <div class="invoice-add-item-wrap">
+                            <input id="invoice-add-item" type="text" maxlength="40" placeholder="Add an Item" class="invoice-input add-item">
+                            <input id="invoice-add-item-price" type="number" min="1" max="1000000" placeholder="Price" class="invoice-input price-input" oninput="checkLength()">
+                            <button id="add-item-btn" title="Add Item" onclick="newFunc()">+</button>
+                        </div>
+                    </div>    
+                </div>
+                <div class="row-2-grid">
+                    <div class="invoice-area">
+                        <div class="top-area-wrap">
+                            <h2>Quick View:</h2>
+                            <div class="invoice-item-no" id="current-invoice-date"></div>
+                        </div>    
+                        <div class="invoice-input-wrap is--less-pad">
+                            <div class="invoice-item is--items-left">
+                                <div class="invoice-item-name is--no-interact">Invoice Title: <span id="invoice-title-el" class="invoice-item-amount is--no-interact"></span></div>
+                            </div>
+                            <div class="invoice-item is--items-left">
+                                <div class="invoice-item-name is--no-interact">Recipient: <span id="invoice-recipient-el" class="invoice-item-amount is--no-interact"></span></div>
+                            </div>
+                            <div class="invoice-item is--items-left">
+                                <div class="invoice-item-name is--no-interact">Email: <span id="invoice-email-el" class="invoice-item-amount is--no-interact"></span></div>
+                            </div>
+                            <div class="invoice-item is--items-left">
+                                <div class="invoice-item-name is--no-interact">Item Count: <span id="invoice-item-count-el" class="invoice-item-amount is--no-interact"></span></div>
+                            </div>
+                            <div class="invoice-item is--items-left">
+                                <div class="invoice-item-name is--no-interact">Due Date: <span id="invoice-due-date-el" class="invoice-item-amount is--no-interact"></span></div>
+                            </div>
+                            <div class="invoice-item is--top-line">
+                                <div class="invoice-item-name is--no-interact">Subtotal:</div>
+                                <div class="invoice-item-amount is--no-interact" id="subtotal-el">$0.00</div>
+                            </div>
+                            <div class="invoice-item">
+                                <div class="invoice-item-name is--no-interact">Tax: <span id="tax-rate-el" class="invoice-item-no">8%</span></div>
+                            <div class="invoice-item-amount is--no-interact" id="tax-el">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="invoice-item">
+                            <div class="invoice-total">Invoice Total:</div>
+                            <div class="invoice-total prpl-txt" id="total-el">$0.00</div>
+                        </div>
+                        <div class="btn-wrap">
+                            <button id="invoice-btn">Send Invoice<img src="images/send icon.svg" class="send-icon"></button>
+                        </div>
+                    </div>
+                    <div class="invoice-area">
+                        <div class="header-wrap">
+                            <h2>Recent Invoices:</h2>
+                            <a class="view-more-txt">View All</a>
+                        </div>
+                        <div id="recent-invoice-wrap">
+                            <!-- <div class="recent-invoice-item">
+                                <div class="recent-item__half">
+                                    <p class="recent-invoice-title">Lawn Cutting</p>
+                                    <p class="invoice-item-no">6-2-2022</p>
+                                </div>
+                                <img src="images/expand details arrow.svg" class="view-more-absolute">
+                                <div class="recent-item__half is--center-align is--no-margin">
+                                    <p class="recent-invoice-title prpl-txt">$101.37</p>
+                                    <p class="invoice-item-no">John Schmidt</p>
+                                    <a><img src="images/check icon.svg" class="check-icon"></a>
+                                    <p>Paid</p>
+                                </div>
+                            </div>     -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </section> 
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
